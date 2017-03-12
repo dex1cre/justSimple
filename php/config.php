@@ -10,9 +10,27 @@ define("DESIGN", false);
 #Константы и функции
 ####################
 
+############################
+#Работа с базой данных MySQL
+############################
+$db_name = "justSimple";
+$name = "root";
+$password = "";
+$host = "localhost";
+
+$conn = new mysqli($host, $name, $password, $db_name);
+if (mysqli_connect_errno()) echo mysqli_connect_error();
+
+#################################
+#Работа с дополнительными файлами
+#################################
 #Подключаемые файлы стилей
 $style = array(
-	"views/css/style.css",
+	"index.php" => "views/css/style.css",
+	"admin.php" => "views/css/admin.css",
+);
+$script = array(
+	"admin.php" => "views/js/admin.js",
 );
 
 function Request_url() {
@@ -33,6 +51,7 @@ function Redirection() {
 		#Проверка существования файла
 		if (file_exists($file_name)) {
 			require_once $file_name;
+			return $redirect[$file_atribute];
 		} else {
 			
 			#Если включён режим разработчика
